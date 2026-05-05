@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manis & Co. — Homemade Dessert</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Lato', sans-serif; background: #FDF6EE; color: #3D2B1F; }
+
+  nav {
+    background: #FDF6EE;
+    padding: 18px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #E8D5C4;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .logo { font-family: 'Playfair Display', serif; font-size: 22px; color: #7B3F00; letter-spacing: 1px; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { text-decoration: none; color: #6B4C3B; font-size: 14px; letter-spacing: 0.5px; transition: color 0.2s; }
+  .nav-links a:hover { color: #7B3F00; }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 85vh;
+    align-items: center;
+    padding: 0 48px;
+    gap: 48px;
+    background: linear-gradient(135deg, #FDF6EE 60%, #F5E6D3 100%);
+  }
+  .hero-text h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    line-height: 1.15;
+    color: #3D2B1F;
+    margin-bottom: 20px;
+  }
+  .hero-text h1 em { color: #A0522D; font-style: italic; }
+  .hero-text p { font-size: 16px; color: #6B4C3B; line-height: 1.8; margin-bottom: 32px; font-weight: 300; max-width: 420px; }
+  .btn-primary {
+    background: #7B3F00;
+    color: #FDF6EE;
+    padding: 14px 32px;
+    border: none;
+    border-radius: 2px;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-right: 16px;
+  }
+  .btn-primary:hover { background: #5C2E00; }
+  .btn-secondary {
+    background: transparent;
+    color: #7B3F00;
+    padding: 14px 32px;
+    border: 1px solid #7B3F00;
+    border-radius: 2px;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { background: #7B3F00; color: #FDF6EE; }
+
+  .hero-visual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 16px;
+    padding: 32px 0;
+  }
+  .cake-card {
+    background: #FFF8F2;
+    border: 1px solid #E8D5C4;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cake-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(123,63,0,0.12); }
+  .cake-card.featured {
+    grid-column: span 2;
+    background: #F5E6D3;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-align: left;
+  }
+  .cake-icon { font-size: 40px; margin-bottom: 8px; }
+  .cake-card.featured .cake-icon { font-size: 52px; margin-bottom: 0; }
+  .cake-name { font-family: 'Playfair Display', serif; font-size: 15px; color: #3D2B1F; margin-bottom: 4px; }
+  .cake-price { font-size: 13px; color: #A0522D; font-weight: 700; }
+  .cake-desc { font-size: 12px; color: #6B4C3B; line-height: 1.5; }
+
+  .badge {
+    display: inline-block;
+    background: #7B3F00;
+    color: #FDF6EE;
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 1px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .section { padding: 80px 48px; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    color: #3D2B1F;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .section-sub { text-align: center; color: #6B4C3B; font-size: 15px; margin-bottom: 48px; font-weight: 300; }
+
+  .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .menu-item {
+    background: #FFF8F2;
+    border: 1px solid #E8D5C4;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+  .menu-item:hover { transform: translateY(-4px); }
+  .menu-thumb {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 52px;
+    background: #F5E6D3;
+  }
+  .menu-info { padding: 16px; }
+  .menu-info h3 { font-family: 'Playfair Display', serif; font-size: 17px; color: #3D2B1F; margin-bottom: 6px; }
+  .menu-info p { font-size: 13px; color: #6B4C3B; line-height: 1.6; margin-bottom: 12px; }
+  .menu-footer { display: flex; justify-content: space-between; align-items: center; }
+  .menu-price { color: #A0522D; font-weight: 700; font-size: 15px; }
+  .menu-order {
+    font-size: 12px;
+    color: #7B3F00;
+    border: 1px solid #7B3F00;
+    padding: 5px 14px;
+    border-radius: 2px;
+    cursor: pointer;
+    background: transparent;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+  }
+  .menu-order:hover { background: #7B3F00; color: #FDF6EE; }
+
+  .values-section { background: #3D2B1F; padding: 60px 48px; }
+  .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; text-align: center; }
+  .value-item h3 { font-family: 'Playfair Display', serif; font-size: 18px; color: #F5E6D3; margin: 12px 0 8px; }
+  .value-item p { font-size: 14px; color: #C4A882; line-height: 1.7; }
+  .value-num { font-family: 'Playfair Display', serif; font-size: 40px; color: #A0522D; }
+
+  .cta-section {
+    background: #F5E6D3;
+    padding: 80px 48px;
+    text-align: center;
+  }
+  .cta-section h2 { font-family: 'Playfair Display', serif; font-size: 40px; color: #3D2B1F; margin-bottom: 16px; }
+  .cta-section p { color: #6B4C3B; font-size: 16px; margin-bottom: 32px; font-weight: 300; }
+
+  .footer {
+    background: #2A1A0F;
+    color: #C4A882;
+    padding: 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 20px; color: #F5E6D3; }
+  .footer p { font-size: 13px; }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { color: #C4A882; text-decoration: none; font-size: 13px; }
+  .footer-links a:hover { color: #F5E6D3; }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding: 32px 24px; }
+    .hero-text h1 { font-size: 36px; }
+    .hero-visual { display: none; }
+    .menu-grid { grid-template-columns: 1fr; }
+    .values-grid { grid-template-columns: 1fr; }
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .section { padding: 48px 24px; }
+    .footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Manis & Co.</div>
+  <ul class="nav-links">
+    <li><a href="#">Menu</a></li>
+    <li><a href="#">Tentang Kami</a></li>
+    <li><a href="#">Pesan Custom</a></li>
+    <li><a href="#">Kontak</a></li>
+  </ul>
+  <button class="btn-primary" style="padding: 10px 22px; font-size: 12px;">Pesan Sekarang</button>
+</nav>
+
+<section class="hero">
+  <div class="hero-text">
+    <span class="badge">Homemade with Love</span>
+    <h1>Kue Buatan Tangan, <em>Rasa Seperti Rumah</em></h1>
+    <p>Setiap gigitan adalah kehangatan yang kami buat dengan bahan-bahan pilihan dan resep turun-temurun. Dari dapur kami, langsung ke momen spesialmu.</p>
+    <button class="btn-primary">Lihat Menu</button>
+    <button class="btn-secondary">Pesan Custom</button>
+  </div>
+  <div class="hero-visual">
+    <div class="cake-card featured">
+      <div class="cake-icon">🎂</div>
+      <div>
+        <span class="badge">Terlaris</span>
+        <div class="cake-name" style="font-size: 18px;">Lapis Legit Spesial</div>
+        <div class="cake-desc" style="margin: 6px 0 10px;">Dibuat 40 lapisan tipis dengan mentega premium & rempah pilihan.</div>
+        <div class="cake-price">Rp 285.000</div>
+      </div>
+    </div>
+    <div class="cake-card">
+      <div class="cake-icon">🍮</div>
+      <div class="cake-name">Puding Sutra</div>
+      <div class="cake-price">Rp 45.000</div>
+    </div>
+    <div class="cake-card">
+      <div class="cake-icon">🧁</div>
+      <div class="cake-name">Cupcake Milo</div>
+      <div class="cake-price">Rp 25.000</div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="section-title">Menu Pilihan</h2>
+  <p class="section-sub">Dibuat segar setiap hari, tanpa pengawet, penuh cinta</p>
+  <div class="menu-grid">
+    <div class="menu-item">
+      <div class="menu-thumb">🍰</div>
+      <div class="menu-info">
+        <h3>Bolu Pandan Gula Aren</h3>
+        <p>Aroma pandan yang harum berpadu manisnya gula aren asli Jawa Barat.</p>
+        <div class="menu-footer">
+          <span class="menu-price">Rp 120.000</span>
+          <button class="menu-order">Pesan</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-thumb">🧇</div>
+      <div class="menu-info">
+        <h3>Brownies Fudgy</h3>
+        <p>Cokelat gelap premium, lembut di dalam, sedikit crispy di luar.</p>
+        <div class="menu-footer">
+          <span class="menu-price">Rp 95.000</span>
+          <button class="menu-order">Pesan</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-thumb">🍮</div>
+      <div class="menu-info">
+        <h3>Caramel Custard</h3>
+        <p>Tekstur lembut seperti sutra dengan saus karamel buatan sendiri.</p>
+        <div class="menu-footer">
+          <span class="menu-price">Rp 55.000</span>
+          <button class="menu-order">Pesan</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-thumb">🎂</div>
+      <div class="menu-info">
+        <h3>Birthday Cake Custom</h3>
+        <p>Desain sesuai keinginan, ukuran & rasa bisa disesuaikan.</p>
+        <div class="menu-footer">
+          <span class="menu-price">Mulai Rp 350.000</span>
+          <button class="menu-order">Pesan</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-thumb">🥧</div>
+      <div class="menu-info">
+        <h3>Pie Susu Bali</h3>
+        <p>Kulit pastry renyah dengan isian susu manis yang creamy.</p>
+        <div class="menu-footer">
+          <span class="menu-price">Rp 8.000 / pcs</span>
+          <button class="menu-order">Pesan</button>
+        </div>
+      </div>
+    </div>
+    <div class="menu-item">
+      <div class="menu-thumb">🍩</div>
+      <div class="menu-info">
+        <h3>Donat Glazur Spesial</h3>
+        <p>Empuk dan mengembang sempurna, topping glazur aneka rasa.</p>
+        <div class="menu-footer">
+          <span class="menu-price">Rp 15.000 / pcs</span>
+          <button class="menu-order">Pesan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="values-section">
+  <div class="values-grid">
+    <div class="value-item">
+      <div class="value-num">100%</div>
+      <h3>Bahan Alami</h3>
+      <p>Tanpa pengawet, tanpa pewarna buatan. Semua dari bahan pilihan terbaik.</p>
+    </div>
+    <div class="value-item">
+      <div class="value-num">500+</div>
+      <h3>Pelanggan Bahagia</h3>
+      <p>Sudah dipercaya ratusan keluarga untuk setiap momen spesial mereka.</p>
+    </div>
+    <div class="value-item">
+      <div class="value-num">5★</div>
+      <h3>Rating Pelanggan</h3>
+      <p>Kepuasan kamu adalah prioritas utama kami di setiap pesanan.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2>Siap Memesan?</h2>
+  <p>Pesan sehari sebelumnya untuk mendapat kue segar di hari yang kamu mau. Tersedia pengiriman ke seluruh kota!</p>
+  <button class="btn-primary" style="font-size: 14px; padding: 16px 40px;">Hubungi Kami via WhatsApp</button>
+</section>
+
+<footer class="footer">
+  <div>
+    <div class="footer-logo">Manis & Co.</div>
+    <p style="margin-top: 6px; font-size: 12px;">Homemade Dessert • Jakarta</p>
+  </div>
+  <p style="font-size: 12px;">© 2026 Manis & Co. All rights reserved.</p>
+  <div class="footer-links">
+    <a href="#">Instagram</a>
+    <a href="#">WhatsApp</a>
+    <a href="#">Tokopedia</a>
+  </div>
+</footer>
+
+</body>
+</html>
